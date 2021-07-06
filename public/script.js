@@ -3,11 +3,12 @@ const videoGrid = document.getElementById('video-grid')
 
 const startElem = document.getElementById("start");
 const stopElem = document.getElementById("stop");
+// const videoElement = document.getElementById("video")
 var displayMediaOptions = {
   video: {
     cursor: "always"
   },
-  audio: true
+  audio: false
 };
 
 const myPeer = new Peer(undefined, {
@@ -152,7 +153,6 @@ stopElem.addEventListener("click", function(evt) {
 }, false);
 
 async function startCapture() {
-  logElem.innerHTML = "";
 
   try {
     myVideo.srcObject = await navigator.mediaDevices.getDisplayMedia(displayMediaOptions);
