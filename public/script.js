@@ -31,6 +31,13 @@ navigator.mediaDevices.getUserMedia({
     const video = document.createElement('video')
     call.on('stream', userVideoStream => {
       addVideoStream(video, userVideoStream)
+      startElem.addEventListener("click", function(evt) {
+        startCapture();
+      }, false);
+      
+      stopElem.addEventListener("click", function(evt) {
+        stopCapture();
+      }, false);
     })
   })
 
