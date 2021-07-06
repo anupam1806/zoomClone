@@ -1,5 +1,15 @@
 const socket = io('/')
 const videoGrid = document.getElementById('video-grid')
+
+const startElem = document.getElementById("start");
+const stopElem = document.getElementById("stop");
+var displayMediaOptions = {
+  video: {
+    cursor: "always"
+  },
+  audio: true
+};
+
 const myPeer = new Peer(undefined, {
   path: '/peerjs',
   host: '/',
@@ -131,6 +141,31 @@ const setPlayVideo = () => {
     <span>Play Video</span>
   `
   document.querySelector('.main__video_button').innerHTML = html;
+}
+
+startElem.addEventListener("click", function(evt) {
+  startCapture();
+}, false);
+
+stopElem.addEventListener("click", function(evt) {
+  stopCapture();
+}, false);
+
+async function startCapture() {
+  logElem.innerHTML = "";
+
+  try {
+    myVideo.srcObject = await navigator.mediaDevices.getDisplayMedia(displayMediaOptions);
+    dumpOptionsInfo();
+  } catch(err) {
+    console.error("Error: " + err);
+  }
+}
+function stopCapture(evt) {
+  let tracks = myVideo.srcObject.getTracks();
+
+  tracks.forEach(track => track.stop());
+  myVideo.srcObject = null;
 }
 
 function close_window() {
